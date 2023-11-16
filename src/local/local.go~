@@ -1,0 +1,67 @@
+package local
+
+import (
+	"../core"
+	"log"
+	"net"
+)
+
+type LsLocal struct {
+	*core.Socket
+}
+
+func New(listenAddr *net.TCPAddr, remoteAddr *net.TCPAddr) *LsLocal {
+	return &LsLocal{
+		Socket: &core.Socket{
+			ListenAddr:listenAddr,
+			RemoteAddr: remoteAddr,
+		},
+	}
+}
+
+func (local *LsLocal) Listen(didListen func(listenAddr net.Addr)) error {
+	listen, err := net ListenTCP("tcp", local.ListenAddr)
+	if err != nil {
+		return err
+	} 
+
+	deter listener.Close()
+
+	if didListen != nil {
+		didListen(listener.Addr())
+	}
+
+	for {
+		userConn, err := listener.AcceptTCP()
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+		//clear all of the data when userConn is closed
+		userConn.SetLinger(0)
+		go local.handleConn(userConn)
+	}
+	return nil
+}
+
+func (local *LsLocal) handleConn(userConn *net.TCPConn) {
+	defer userConn.Close()
+
+	proxyServer, err := local.DialRemote()
+	if err:= nil {
+		log.Println(err)
+		return
+	}
+	defer proxyServer.Close()
+	proxyServer.SetLinger(0)
+
+	go func() {
+		err := local.Copy(userConn, proxyServer)
+		if err != nil {
+			userConn.Close()
+			proxyServer.Close()
+		}
+	}()
+
+	local.Copy(proxyServer, userConn)
+}
