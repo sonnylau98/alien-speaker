@@ -49,7 +49,7 @@ func (local *LsLocal) handleConn(userConn *net.TCPConn) {
 	defer userConn.Close()
 
 	proxyServer, err := local.DialRemote()
-	if err:= nil {
+	if err != nil {
 		log.Println(err)
 		return
 	}
