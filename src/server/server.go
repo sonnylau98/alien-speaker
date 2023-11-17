@@ -55,6 +55,7 @@ func (lsServer *LsServer) handleConn(localConn *net.TCPConn) {
 	defer dstServer.Close()
 	dstServer.SetLinger(0)
 
+	/* Unfinished
 	go func() {
 		err := local.Copy(dstServer, localConn)
 		if err != nil {
@@ -65,4 +66,6 @@ func (lsServer *LsServer) handleConn(localConn *net.TCPConn) {
 	
 	//send local data to proxy server
 	lsServer.Copy(localConn, dstServer)
+
+	*/
 }
