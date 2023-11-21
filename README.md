@@ -5,3 +5,8 @@ Previously, I worked on a project when I first started learning C/C++. The aim w
 # Prospect
 
 I am planning to integrate networking capabilities.
+
+## UNSOLVED
+
+[golang net](https://pkg.go.dev/net)
+
