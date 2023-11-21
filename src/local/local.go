@@ -44,7 +44,6 @@ func (local *LsLocal) Listen(didListen func(listenAddr net.Addr)) error {
 	return nil
 }
 
-//dial the proxy server, read proxy's data to local data;
 func (local *LsLocal) handleConn(userConn *net.TCPConn) {
 	defer userConn.Close()
 
@@ -64,6 +63,5 @@ func (local *LsLocal) handleConn(userConn *net.TCPConn) {
 		}
 	}()
 	
-	//send local data to proxy server
 	local.Copy(proxyServer, userConn)
 }

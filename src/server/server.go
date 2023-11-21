@@ -43,7 +43,7 @@ func (lsServer *LsServer) Listen(didListen func(listenAddr net.Addr)) error {
 	}
 	return nil
 }
-
+ 
 func (lsServer *LsServer) handleConn(localConn *net.TCPConn) {
 	defer localConn.Close()
 	
@@ -55,17 +55,13 @@ func (lsServer *LsServer) handleConn(localConn *net.TCPConn) {
 	defer dstServer.Close()
 	dstServer.SetLinger(0)
 
-	/* Unfinished
 	go func() {
-		err := local.Copy(dstServer, localConn)
+		err := lsServer.Copy(localConn, dstServer)
 		if err != nil {
 			localConn.Close()
 			dstServer.Close()
 		}
 	}()
 	
-	//send local data to proxy server
-	lsServer.Copy(localConn, dstServer)
-
-	*/
+	lsServer.Copy(dstServer, localConn)
 }
