@@ -25,9 +25,7 @@ func (socket *Socket) Copy(dst *net.TCPConn, src *net.TCPConn) error {
 			if errRead != io.EOF {
 				return errRead
 			}
-			else {
 				return nil
-			}
 		}
 		if readCount > 0 {
 			writeCount, errWrite := dst.Write(buf[0:readCount])

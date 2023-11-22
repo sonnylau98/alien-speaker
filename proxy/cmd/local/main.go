@@ -5,8 +5,8 @@ import (
 	"log"
 	"net"
 
-	"../cmd"
-	"../../local"
+	"github.com/sonnylau98/alien-speaker/proxy/cmd"
+	"github.com/sonnylau98/alien-speaker/proxy/local"
 )
 
 const (

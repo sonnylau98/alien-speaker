@@ -3,7 +3,8 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
-	"../go-homedir"
+	"github.com/sonnylau98/alien-speaker/proxy/homedir"
+
 	"io/ioutil"
 	"log"
 	"os"
