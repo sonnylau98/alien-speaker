@@ -10,17 +10,6 @@ type LsLocal struct {
 	*core.Socket
 }
 
-/*
-func New(listenAddr *net.TCPAddr, remoteAddr *net.TCPAddr) *LsLocal {
-	return &LsLocal{
-		Socket: &core.Socket{
-			ListenAddr:listenAddr,
-			RemoteAddr: remoteAddr,
-		},
-	}
-}
-*/
-
 func NewLsLocal(listenAddr, remoteAddr string) (*LsLocal, error) {
 	
 	structListenAddr, err := net.ResolveTCPAddr("tcp", listenAddr)
@@ -51,7 +40,6 @@ func (local *LsLocal) Listen(didListen func(listenAddr *net.TCPAddr)) error {
 	defer listener.Close()
 
 	if didListen != nil {
-		//	didListen(listener.Addr())
 		go didListen(listener.Addr().(*net.TCPAddr))
 	}
 

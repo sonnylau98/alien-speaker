@@ -1,8 +1,7 @@
 package server
 
 import (
-	//	"encoding/binary"
-	"../core"
+	"github.com/sonnylau98/alien-speaker/proxy/core"
 	"log"
 	"net"
 )
@@ -14,13 +13,27 @@ type LsServer struct {
 func New(listenAddr *net.TCPAddr) *LsServer {
 	return &LsServer{
 		Socket: &core.Socket{
-			ListenAddr: listenAdder,
+			ListenAddr: listenAddr,
 		},
 	}
 }
 
+func NewLsServer(listenAddr string) (*LsServer, error) {
+	
+	structListenAddr, err := net.ResolveTCPAddr("tcp", listenAddr)
+	if err != nil {
+		return nil, err
+	}
+	
+	return &LsServer{
+		Socket: &core.Socket{
+			ListenAddr: structListenAddr,
+		},
+	}, nil	
+}
+
 //listen local
-func (lsServer *LsServer) Listen(didListen func(listenAddr net.Addr)) error {
+func (lsServer *LsServer) Listen(didListen func(listenAddr *net.TCPAddr)) error {
 	listener, err := net.ListenTCP("tcp", lsServer.ListenAddr)
 	if err != nil {
 		return err
@@ -28,8 +41,8 @@ func (lsServer *LsServer) Listen(didListen func(listenAddr net.Addr)) error {
 
 	defer listener.Close()
 
-	if didiListen != nil {
-		didListen(listener.Addr())
+	if didListen != nil {
+		go didListen(listener.Addr().(*net.TCPAddr))
 	}
 
 	for {
@@ -38,7 +51,7 @@ func (lsServer *LsServer) Listen(didListen func(listenAddr net.Addr)) error {
 			log.Println(err)
 			continue
 		}
-		localConn,SetLinger(0)
+		localConn.SetLinger(0)
 		go lsServer.handleConn(localConn)
 	}
 	return nil

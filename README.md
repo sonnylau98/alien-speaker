@@ -10,8 +10,6 @@ I am planning to integrate proxying capabilities, also adding multi-platform sup
 
 ## Going to finish
 
- - "Listen" part in `github.com/sonnylau98/alien-speaker/proxy/local/local.go`.
-
  - Debugging processes through [gdb](https://www.gnu.org/savannah-checkouts/gnu/gdb/index.html).
 
  - Functions of golang package "[net](https://pkg.go.dev/net)".

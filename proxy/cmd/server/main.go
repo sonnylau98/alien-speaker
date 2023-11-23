@@ -7,9 +7,9 @@ import (
 	"os"
 	"strconv"
 
-	"../.."
-	"../cmd"
-	"../../server"
+	//	"../.."
+	"github.com/sonnylau98/alien-speaker/proxy/cmd"
+	"github.com/sonnylau98/alien-speaker/proxy/server"
 )
    
 var version = "master"
@@ -28,7 +28,7 @@ func main() {
 	config.ReadConfig()
 	config.SaveConfig()
 	
-	lsServer, err := local.NewLsServer(config.ListenAddr)
+	lsServer, err := server.NewLsServer(config.ListenAddr)
 	if err != nil {
 		log.Fatalln(err)
 	}
