@@ -1,8 +1,11 @@
 package server
 
 import (
+	
 	"github.com/sonnylau98/alien-speaker/proxy/core"
 	"log"
+
+	"encoding/binary"
 	"net"
 )
 
@@ -51,22 +54,67 @@ func (lsServer *LsServer) Listen(didListen func(listenAddr *net.TCPAddr)) error 
  
 func (lsServer *LsServer) handleConn(localConn *net.TCPConn) {
 	defer localConn.Close()
+	//
+
+	buf := make([]byte, 256)
+
+	n, err := localConn.Read(buf)
+
+	if err != nil || n < 7 {
+		return
+	}
+
+	//Only support: CONNECT X'01'
+	if buf[1] != 0x01 {
+		return
+	}
+
+	var dIP []byte
+
+	switch buf[3] {
+	case 0x01:
+		// IP V4 address: X'01'
+		dIP = buf[4 : 4+net.IPv4len]
+	case 0x03:
+		// DOMAINNAME: X'03'
+		ipAddr, err := net.ResolveIPAddr("ip", string(buf[5:n-2]))
+		if err != nil {
+			return
+		}
+		dIP = ipAddr.IP
+	case 0x04:
+		// IP V6  address: X'04'
+		dIP = buf[4 : 4+net.IPv6len]
+	default:
+		return
+	}
+
+	dPort := buf[n-2:]
+	dstAddr := &net.TCPAddr{
+		IP: dIP,
+		Port: int(binary.BigEndian.Uint16(dPort)),
+	}
 	
-	dstServer, err := lsServer.DialRemote()
+	//
+	dstServer, err := net.DialTCP("tcp", nil, dstAddr)
 	if err != nil {
 		log.Println(err)
 		return
-	}
-	defer dstServer.Close()
-	dstServer.SetLinger(0)
+	} else {
+		defer dstServer.Close()
+		dstServer.SetLinger(0)
 
+		localConn.Write([]byte{0x05, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
+	}
+
+	// local 2 dst
 	go func() {
-		err := lsServer.Copy(localConn, dstServer)
+		err := lsServer.Copy(dstServer, localConn)
 		if err != nil {
 			localConn.Close()
 			dstServer.Close()
 		}
 	}()
 	
-	lsServer.Copy(dstServer, localConn)
+	lsServer.Copy(localConn, dstServer)
 }
