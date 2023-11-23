@@ -51,7 +51,8 @@ func (local *LsLocal) Listen(didListen func(listenAddr *net.TCPAddr)) error {
 	defer listener.Close()
 
 	if didListen != nil {
-		didListen(listener.Addr())
+		//	didListen(listener.Addr())
+		go didListen(listener.Addr().(*net.TCPAddr))
 	}
 
 	for {
