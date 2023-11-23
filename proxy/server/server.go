@@ -10,14 +10,6 @@ type LsServer struct {
 	*core.Socket
 }
 
-func New(listenAddr *net.TCPAddr) *LsServer {
-	return &LsServer{
-		Socket: &core.Socket{
-			ListenAddr: listenAddr,
-		},
-	}
-}
-
 func NewLsServer(listenAddr string) (*LsServer, error) {
 	
 	structListenAddr, err := net.ResolveTCPAddr("tcp", listenAddr)
