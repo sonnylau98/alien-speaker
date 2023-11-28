@@ -12,6 +12,4 @@ I am planning to integrate proxying capabilities, also adding multi-platform sup
 
  - Debugging processes through [gdb](https://www.gnu.org/savannah-checkouts/gnu/gdb/index.html).
 
- - Functions of golang package "[net](https://pkg.go.dev/net)";`proxy/server/server.go`
-
- - Testing on Ubuntu Platform.
+ - Functions of golang package "[net](https://pkg.go.dev/net)"; net.TCPConn.
