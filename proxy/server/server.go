@@ -54,10 +54,17 @@ func (lsServer *LsServer) Listen(didListen func(listenAddr *net.TCPAddr)) error 
  
 func (lsServer *LsServer) handleConn(localConn *net.TCPConn) {
 	defer localConn.Close()
-	//
 
 	buf := make([]byte, 256)
 
+	_, err := localConn.Read(buf)
+
+	if err != nil || buf[0] != 0x05 {
+		return
+	}
+
+	localConn.Write([]byte{0x05, 0x00})
+	
 	n, err := localConn.Read(buf)
 
 	if err != nil || n < 7 {

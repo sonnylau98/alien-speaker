@@ -64,7 +64,8 @@ func (local *LsLocal) handleConn(userConn *net.TCPConn) {
 		return
 	}
 	defer proxyServer.Close()
-	// proxyServer.SetLinger(0)
+
+	proxyServer.SetLinger(0)
 
 	go func() {
 		err := local.Copy(userConn, proxyServer)
