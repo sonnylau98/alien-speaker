@@ -10,6 +10,8 @@ I am planning to integrate proxying capabilities, also adding multi-platform sup
 
 ## Going to finish
 
- - Debugging processes through [gdb](https://www.gnu.org/savannah-checkouts/gnu/gdb/index.html) & [ddd](https://www.gnu.org/software/ddd/manual/html_mono/ddd.html).
+ - HTTP/SOCKS protocols
 
- - Functions of golang package "[net](https://pkg.go.dev/net)"; net.TCPConn.
+ - Functions of golang package "[net](https://pkg.go.dev/net)".
+
+ - Debugging processes through [gdb](https://www.gnu.org/savannah-checkouts/gnu/gdb/index.html) & [ddd](https://www.gnu.org/software/ddd/manual/html_mono/ddd.html).
