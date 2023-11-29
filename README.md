@@ -1,14 +1,14 @@
 # Purpose
 
-This project is used for crypting sensitive text for transmission via a censored instant messaging service.
+An proxy software, crypting sensitive text for transmission via a censored instant messaging service.
 
-It is available in folder `crypt` and is designed to run exclusively on Windows.
+# Finished
 
-# Prospect
+ - Proxy capacity through SOCKS protocol is available in folder `proxy`.
 
-I am planning to integrate proxying capabilities, also adding multi-platform support. (folder `proxy`)
+ - Encryption and decryption code part is available in folder `crypt` and is designed to run exclusively on Windows. (To be modified and integrated in the future.)
 
-## Going to finish
+# Related Information
 
  - HTTP/SOCKS protocols.
 
