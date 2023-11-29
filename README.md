@@ -10,8 +10,8 @@ I am planning to integrate proxying capabilities, also adding multi-platform sup
 
 ## Going to finish
 
- - HTTP/SOCKS protocols
+ - HTTP/SOCKS protocols.
 
- - Functions of golang package "[net](https://pkg.go.dev/net)".
+ - Functions of golang package "[net.TCPConn](https://cs.opensource.google/go/go/+/go1.21.4:src/net/tcpsock.go;l=112)".
 
  - Debugging processes through [gdb](https://www.gnu.org/savannah-checkouts/gnu/gdb/index.html) & [ddd](https://www.gnu.org/software/ddd/manual/html_mono/ddd.html).
