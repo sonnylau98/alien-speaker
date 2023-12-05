@@ -7,7 +7,6 @@ import (
 	"os"
 	"strconv"
 
-	//	"../.."
 	"github.com/sonnylau98/alien-speaker/proxy/cmd"
 	"github.com/sonnylau98/alien-speaker/proxy/server"
 )
@@ -23,7 +22,7 @@ func main() {
 	}
 		
 	config := &cmd.Config{
-		ListenAddr: fmt.Sprint(":%d", port),
+		ListenAddr: fmt.Sprintf(":%d", port),
 	}
 	config.ReadConfig()
 	config.SaveConfig()

@@ -27,7 +27,7 @@ func NewLsServer(listenAddr string) (*LsServer, error) {
 	}, nil	
 }
 
-//listen local
+// listen local
 func (lsServer *LsServer) Listen(didListen func(listenAddr *net.TCPAddr)) error {
 	listener, err := net.ListenTCP("tcp", lsServer.ListenAddr)
 	if err != nil {
@@ -71,7 +71,7 @@ func (lsServer *LsServer) handleConn(localConn *net.TCPConn) {
 		return
 	}
 
-	//Only support: CONNECT X'01'
+	// Only support: CONNECT X'01'
 	if buf[1] != 0x01 {
 		return
 	}
@@ -102,7 +102,6 @@ func (lsServer *LsServer) handleConn(localConn *net.TCPConn) {
 		Port: int(binary.BigEndian.Uint16(dPort)),
 	}
 	
-	//
 	dstServer, err := net.DialTCP("tcp", nil, dstAddr)
 	if err != nil {
 		log.Println(err)
@@ -114,7 +113,7 @@ func (lsServer *LsServer) handleConn(localConn *net.TCPConn) {
 		localConn.Write([]byte{0x05, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
 	}
 
-	// local 2 dst
+	// local to destination
 	go func() {
 		err := lsServer.Copy(dstServer, localConn)
 		if err != nil {
