@@ -10,7 +10,7 @@ An proxy software, crypting sensitive text for transmission via a censored insta
 
 # Related Information
 
- - HTTP/SOCKS protocols.
+ - HTTP proxy.
 
  - Functions of golang package "[net.TCPConn](https://cs.opensource.google/go/go/+/go1.21.4:src/net/tcpsock.go;l=112)".
 
